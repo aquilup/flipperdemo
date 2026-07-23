@@ -55,9 +55,9 @@ export function LoadingScreen() {
             <img
               src={LOADING_GIF}
               alt="Flipper Zero loading"
-              width={480}
-              height={270}
-              className="h-auto w-[min(80vw,480px)] bg-white object-contain"
+              width={720}
+              height={405}
+              className="h-auto w-[min(92vw,720px)] bg-white object-contain"
               draggable={false}
             />
             <p className="font-[family-name:var(--font-space)] text-xs tracking-[0.35em] text-[#FF8200] uppercase">
