@@ -51,17 +51,15 @@ export function LoadingScreen() {
           aria-label="Loading Flipper Zero 3D experience"
         >
           <div className="flex flex-col items-center gap-6 px-6">
-            <div className="overflow-hidden rounded-2xl border border-black/10 bg-[#0a0a0a] shadow-[0_20px_60px_rgba(255,130,0,0.18)]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={LOADING_GIF}
-                alt="Flipper Zero loading"
-                width={480}
-                height={270}
-                className="h-auto w-[min(80vw,480px)] object-contain"
-                draggable={false}
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={LOADING_GIF}
+              alt="Flipper Zero loading"
+              width={480}
+              height={270}
+              className="h-auto w-[min(80vw,480px)] bg-white object-contain"
+              draggable={false}
+            />
             <p className="font-[family-name:var(--font-space)] text-xs tracking-[0.35em] text-[#FF8200] uppercase">
               {modelReady ? "Ready" : "Loading 3D model"}
             </p>
