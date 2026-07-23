@@ -4,41 +4,20 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useModelLoad } from "@/components/providers/ModelLoadProvider";
 
-const FRAME_COUNT = 46;
-const FRAME_MS = 200; // meta.txt frame rate: 5 fps
+const LOADING_GIF = "https://cdn.flipper.net/zero_landing_what-is_flipper.gif";
 const MIN_VISIBLE_MS = 1200;
-
-const FRAMES = Array.from(
-  { length: FRAME_COUNT },
-  (_, i) => `/loading/frame_${String(i).padStart(2, "0")}.png`,
-);
 
 export function LoadingScreen() {
   const { modelReady } = useModelLoad();
-  const [frame, setFrame] = useState(0);
   const [minTimeDone, setMinTimeDone] = useState(false);
   const [visible, setVisible] = useState(true);
-  const [imagesReady, setImagesReady] = useState(false);
+  const [gifReady, setGifReady] = useState(false);
 
-  // Preload animation frames
   useEffect(() => {
-    let cancelled = false;
-    Promise.all(
-      FRAMES.map(
-        (src) =>
-          new Promise<void>((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve();
-            img.onerror = () => resolve();
-            img.src = src;
-          }),
-      ),
-    ).then(() => {
-      if (!cancelled) setImagesReady(true);
-    });
-    return () => {
-      cancelled = true;
-    };
+    const img = new Image();
+    img.onload = () => setGifReady(true);
+    img.onerror = () => setGifReady(true);
+    img.src = LOADING_GIF;
   }, []);
 
   useEffect(() => {
@@ -47,19 +26,11 @@ export function LoadingScreen() {
   }, []);
 
   useEffect(() => {
-    if (!imagesReady) return;
-    const id = window.setInterval(() => {
-      setFrame((f) => (f + 1) % FRAME_COUNT);
-    }, FRAME_MS);
-    return () => window.clearInterval(id);
-  }, [imagesReady]);
-
-  useEffect(() => {
-    if (modelReady && minTimeDone && imagesReady) {
+    if (modelReady && minTimeDone && gifReady) {
       const t = window.setTimeout(() => setVisible(false), 180);
       return () => window.clearTimeout(t);
     }
-  }, [modelReady, minTimeDone, imagesReady]);
+  }, [modelReady, minTimeDone, gifReady]);
 
   // Safety: never block forever if model fails
   useEffect(() => {
@@ -80,15 +51,14 @@ export function LoadingScreen() {
           aria-label="Loading Flipper Zero 3D experience"
         >
           <div className="flex flex-col items-center gap-6 px-6">
-            <div className="rounded-xl border border-black/10 bg-[#0a0a0a] p-3 shadow-[0_20px_60px_rgba(255,130,0,0.18)]">
+            <div className="overflow-hidden rounded-2xl border border-black/10 bg-[#0a0a0a] shadow-[0_20px_60px_rgba(255,130,0,0.18)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={FRAMES[frame]}
-                alt=""
-                width={256}
-                height={128}
-                className="h-[128px] w-[256px] image-rendering-pixelated"
-                style={{ imageRendering: "pixelated" }}
+                src={LOADING_GIF}
+                alt="Flipper Zero loading"
+                width={480}
+                height={270}
+                className="h-auto w-[min(80vw,480px)] object-contain"
                 draggable={false}
               />
             </div>
