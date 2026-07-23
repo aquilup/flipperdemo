@@ -37,7 +37,7 @@ function ActiveCallout({
   onSelect: (id: string) => void;
   portal: RefObject<HTMLElement | null>;
 }) {
-  const lineRef = useRef<FatLine>(null);
+  const lineRef = useRef<FatLine | null>(null);
   const dotRef = useRef<THREE.Mesh>(null);
   const localAnchor = useMemo(
     () => new THREE.Vector3(...feature.anchor),
@@ -111,7 +111,7 @@ function ActiveCallout({
       <Html
         position={feature.labelPos}
         center
-        portal={portal}
+        portal={portal as RefObject<HTMLElement>}
         zIndexRange={[40, 0]}
         style={{ pointerEvents: "auto" }}
       >
