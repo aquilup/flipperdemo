@@ -2,6 +2,7 @@
 
 import { SmoothScrollProvider } from "@/components/providers/SmoothScroll";
 import { SoundProvider } from "@/components/providers/SoundProvider";
+import { ModelLoadProvider } from "@/components/providers/ModelLoadProvider";
 import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { CursorGlow } from "@/components/layout/CursorGlow";
 import { Navbar } from "@/components/layout/Navbar";
@@ -18,24 +19,26 @@ import { CTA } from "@/components/sections/CTA";
 
 export function HomePage() {
   return (
-    <SoundProvider>
-      <SmoothScrollProvider>
-        <LoadingScreen />
-        <CursorGlow />
-        <AmbientBackground />
-        <Navbar />
-        <main>
-          <Hero />
-          <HardwareFeatures />
-          <FeatureCards />
-          <Timeline />
-          <Specs />
-          <ExplodedSection />
-          <Community />
-          <CTA />
-        </main>
-        <Footer />
-      </SmoothScrollProvider>
-    </SoundProvider>
+    <ModelLoadProvider>
+      <SoundProvider>
+        <SmoothScrollProvider>
+          <LoadingScreen />
+          <CursorGlow />
+          <AmbientBackground />
+          <Navbar />
+          <main>
+            <Hero />
+            <HardwareFeatures />
+            <FeatureCards />
+            <Timeline />
+            <Specs />
+            <ExplodedSection />
+            <Community />
+            <CTA />
+          </main>
+          <Footer />
+        </SmoothScrollProvider>
+      </SoundProvider>
+    </ModelLoadProvider>
   );
 }

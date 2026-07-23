@@ -5,6 +5,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { Center } from "@react-three/drei";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import * as THREE from "three";
+import { useModelLoad } from "@/components/providers/ModelLoadProvider";
 
 type FlipperModelProps = {
   lcdLit?: number;
@@ -73,6 +74,11 @@ export function FlipperModel({
   const root = useRef<THREE.Group>(null);
   const screenMats = useRef<THREE.MeshStandardMaterial[]>([]);
   const obj = useLoader(OBJLoader, "/models/flipper.obj");
+  const { markModelReady } = useModelLoad();
+
+  useEffect(() => {
+    markModelReady();
+  }, [obj, markModelReady]);
 
   const model = useMemo(() => {
     const clone = obj.clone(true);
